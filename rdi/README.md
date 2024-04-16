@@ -9,7 +9,7 @@ This is a simple React application for fetching and displaying news articles usi
 - **Pagination:** Results are paginated, allowing users to navigate through multiple pages of news articles.
 - **Responsive Design:** The app is responsive and works well on both desktop and mobile devices.
 
-## Primary Languages and Technologies Used
+## Languages and Technologies Used
 
 - **JavaScript:** The main programming language used for writing the React application logic.
 - **CSS:** Used for styling the user interface of the application.
@@ -36,6 +36,6 @@ Follow these steps:
     export default config;
 ``` 
 
-file in the project root and keep your News API key there. Remember to import the file in your App.js and gitignore it to avoid publically exposing your API key.
-5. Start the development server by running `npm start`.
+file in the project root and keep your News API key there. Remember to import the file in your App.js and gitignore it to avoid publically exposing your API key. 
+5. Start the development server by running `npm start`. 
 6. Open your web browser and navigate to `http://localhost:3000` to view the app.
