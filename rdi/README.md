@@ -25,10 +25,10 @@ To run this application locally, you need to have Node.js installed on your comp
 
 Follow these steps:
 
-1. Clone this repository to your local machine.
-2. Navigate to the project directory.
-3. Install dependencies by running `npm install`.
-4. Create a separate js (config.js in my case) e.g.
+- Clone this repository to your local machine.
+- Navigate to the project directory.
+- Install dependencies by running `npm install`.
+- Create a separate js (config.js in my case) e.g.
 ```javascript
     const config = {
         apiKey: 'API KEY' 
@@ -38,5 +38,5 @@ Follow these steps:
 
 
 file in the project root and keep your News API key there. Remember to import the file in your App.js and gitignore it to avoid publically exposing your API key. 
-5. Start the development server by running `npm start`. 
-6. Open your web browser and navigate to `http://localhost:3000` to view the app.
+- Start the development server by running `npm start`. 
+- Open your web browser and navigate to `http://localhost:3000` to view the app.
