@@ -1,10 +1,7 @@
-
-
 import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import config from './config';
 import './App.css';
-import useDebounce from './useDebounce'; // Import the custom hook
 
 const App = () => {
   const [news, setNews] = useState([]);
@@ -12,13 +9,23 @@ const App = () => {
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
   const [autocompleteResults, setAutocompleteResults] = useState([]);
-  const [showAutocomplete, setShowAutocomplete] = useState(false);
+  const [showAutocomplete, setShowAutocomplete] = useState(false); 
   const articlesPerPage = 8;
-  const searchContainerRef = useRef(null);
-  const debounceTimeout = 300; // Debounce time in milliseconds
+  const searchContainerRef = useRef(null); 
 
-  // Utilize the useDebounce custom hook
-  const debouncedSearchQuery = useDebounce(searchQuery, debounceTimeout);
+  useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (searchContainerRef.current && !searchContainerRef.current.contains(event.target)) {
+        setShowAutocomplete(false);
+      }
+    };
+
+    document.body.addEventListener('click', handleClickOutside);
+
+    return () => {
+      document.body.removeEventListener('click', handleClickOutside);
+    };
+  }, []);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -40,7 +47,7 @@ const App = () => {
     };
 
     fetchNews();
-  }, [currentPage, debouncedSearchQuery]); // Use debouncedSearchQuery instead of searchQuery
+  }, [currentPage, searchQuery]);
 
   const handleSearch = () => {
     setCurrentPage(1);
@@ -58,14 +65,34 @@ const App = () => {
     });
   };
 
-  const handleInputChange = (e) => {
+  const handleInputChange = async (e) => {
     const { value } = e.target;
     setSearchQuery(value);
+    if (value.trim() !== '') {
+      try {
+        const response = await axios.get('https://newsapi.org/v2/everything', {
+          params: {
+            q: value,
+            apiKey: config.apiKey,
+            pageSize: 5
+          }
+        });
+        const results = response.data.articles.map(article => article.title);
+        setAutocompleteResults(results);
+        setShowAutocomplete(true);
+      } catch (error) {
+        console.error('Error fetching autocomplete suggestions:', error);
+      }
+    } else {
+      setAutocompleteResults([]);
+      setShowAutocomplete(false); 
+    }
   };
 
   const handleAutocompleteClick = (value) => {
     setSearchQuery(value);
     setAutocompleteResults([]);
+    setShowAutocomplete(false); 
   };
 
   return (
@@ -80,7 +107,7 @@ const App = () => {
           placeholder="Search news"
         />
         <button onClick={handleSearch} className="search-button">Search</button>
-        {autocompleteResults.length > 0 && showAutocomplete && (
+        {showAutocomplete && autocompleteResults.length > 0 && (
           <ul className="autocomplete-results">
             {autocompleteResults.map((result, index) => (
               <li key={index} onClick={() => handleAutocompleteClick(result)}>{result}</li>
@@ -128,4 +155,5 @@ const App = () => {
 };
 
 export default App;
+
 

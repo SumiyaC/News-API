@@ -1,4 +1,3 @@
-
 .container {
   max-width: 800px;
   margin: 0 auto;
@@ -16,10 +15,10 @@
 }
 
 .search-input {
-  width: calc(100% - 130px); /* Adjusted width to accommodate button */
+  width: calc(100% - 130px); 
   padding: 10px;
   font-size: 16px;
-  border-radius: 8px; /* Rounded corners */
+  border-radius: 8px; 
 }
 
 .search-button {
@@ -28,9 +27,9 @@
   color: black;
   border: none;
   cursor: pointer;
-  margin-left: 24px; /* Added margin to create space */
+  margin-left: 24px; 
   border-radius: 8px;
-  width: 100px; /* Rounded corners */
+  width: 100px; 
 }
 
 .search-button:hover{
