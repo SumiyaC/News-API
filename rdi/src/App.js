@@ -1,14 +1,24 @@
-import React, { useState, useEffect } from 'react';
+
+
+import React, { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import config from './config';
 import './App.css';
+import useDebounce from './useDebounce'; // Import the custom hook
 
 const App = () => {
   const [news, setNews] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [loading, setLoading] = useState(true);
   const [currentPage, setCurrentPage] = useState(1);
+  const [autocompleteResults, setAutocompleteResults] = useState([]);
+  const [showAutocomplete, setShowAutocomplete] = useState(false);
   const articlesPerPage = 8;
+  const searchContainerRef = useRef(null);
+  const debounceTimeout = 300; // Debounce time in milliseconds
+
+  // Utilize the useDebounce custom hook
+  const debouncedSearchQuery = useDebounce(searchQuery, debounceTimeout);
 
   useEffect(() => {
     const fetchNews = async () => {
@@ -30,7 +40,7 @@ const App = () => {
     };
 
     fetchNews();
-  }, [currentPage, searchQuery]);
+  }, [currentPage, debouncedSearchQuery]); // Use debouncedSearchQuery instead of searchQuery
 
   const handleSearch = () => {
     setCurrentPage(1);
@@ -48,18 +58,35 @@ const App = () => {
     });
   };
 
+  const handleInputChange = (e) => {
+    const { value } = e.target;
+    setSearchQuery(value);
+  };
+
+  const handleAutocompleteClick = (value) => {
+    setSearchQuery(value);
+    setAutocompleteResults([]);
+  };
+
   return (
     <div className="container">
       <h1 className="title">News App</h1>
-      <div className="search-container">
+      <div className="search-container" ref={searchContainerRef}>
         <input
           type="text"
           value={searchQuery}
-          onChange={(e) => setSearchQuery(e.target.value)}
+          onChange={handleInputChange}
           className="search-input"
           placeholder="Search news"
         />
         <button onClick={handleSearch} className="search-button">Search</button>
+        {autocompleteResults.length > 0 && showAutocomplete && (
+          <ul className="autocomplete-results">
+            {autocompleteResults.map((result, index) => (
+              <li key={index} onClick={() => handleAutocompleteClick(result)}>{result}</li>
+            ))}
+          </ul>
+        )}
       </div>
       {loading ? (
         <p className="loading">Loading...</p>
@@ -101,3 +128,4 @@ const App = () => {
 };
 
 export default App;
+

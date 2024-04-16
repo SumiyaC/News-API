@@ -12,7 +12,7 @@
 .search-container {
   margin-bottom: 20px;
   display: flex;
-  /* position: relative; */
+  position: relative;
 }
 
 .search-input {
@@ -100,7 +100,7 @@
   cursor: not-allowed;
 }
 
-/* .autocomplete-results {
+.autocomplete-results {
   position: absolute;
   top: 100%;
   left: 0;
@@ -123,4 +123,4 @@
 
 .autocomplete-results li:hover {
   background-color: #f0f0f0;
-} */
+}
