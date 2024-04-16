@@ -34,7 +34,7 @@ Follow these steps:
         apiKey: 'API KEY' 
     };
     export default config;
-    ``` 
+``` 
 
 file in the project root and keep your News API key there. Remember to import the file in your App.js and gitignore it to avoid publically exposing your API key.
 5. Start the development server by running `npm start`.
