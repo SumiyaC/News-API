@@ -36,6 +36,7 @@ Follow these steps:
     export default config;
 ``` 
 
+
 file in the project root and keep your News API key there. Remember to import the file in your App.js and gitignore it to avoid publically exposing your API key. 
-5. Start the development server by running `npm start`. 
-6. Open your web browser and navigate to `http://localhost:3000` to view the app.
+- Start the development server by running `npm start`. 
+- Open your web browser and navigate to `http://localhost:3000` to view the app.
